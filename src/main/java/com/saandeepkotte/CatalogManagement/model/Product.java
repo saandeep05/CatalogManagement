@@ -21,4 +21,7 @@ public class Product {
     private String shortDescription;
     @NonNull
     private int price;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "catalog_id", referencedColumnName = "id", nullable = false)
+    private Catalog catalog;
 }

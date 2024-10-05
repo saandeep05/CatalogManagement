@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,4 +20,9 @@ public class Catalog {
     private String name;
     private Date activeDate;
     private int totalItems;
+    @OneToMany(mappedBy = "catalog",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            targetEntity = Product.class)
+    private List<Product> products;
 }
