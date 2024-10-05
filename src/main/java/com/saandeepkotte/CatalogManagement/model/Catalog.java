@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "catalog")
 public class Catalog {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NonNull
     private String name;
