@@ -20,4 +20,30 @@ public class CatalogService {
     public Catalog addCatalog(Catalog catalog) {
         return catalogRepository.save(catalog);
     }
+
+    public List<Catalog> strictSearchCatalog(Catalog catalog) {
+        return catalogRepository.findAllByNameAndActiveDateGreaterThanEqualAndTotalItems(
+                catalog.getName(),
+                catalog.getActiveDate(),
+                catalog.getTotalItems()
+        );
+    }
+
+    public List<Catalog> casualSearchCatalog(Catalog catalog) {
+        String name = catalog.getName();
+        Date activeDate = catalog.getActiveDate();
+        int totalItems = catalog.getTotalItems();
+
+        if(activeDate == null && totalItems == 0) {
+            return catalogRepository.findAllByName(name);
+        }
+        else if(totalItems == 0) {
+            return catalogRepository.findAllByNameAndActiveDateGreaterThanEqual(name, activeDate);
+        }
+        return catalogRepository.findAllByNameOrActiveDateGreaterThanEqualOrTotalItems(
+                name,
+                activeDate,
+                totalItems
+        );
+    }
 }
