@@ -31,8 +31,6 @@ public class CatalogController {
     @PostMapping("/search/{isStrict}")
     public List<Catalog> searchCatalog(@RequestBody Catalog catalog,
                                        @PathVariable boolean isStrict) throws Exception {
-        if(catalog.getName().equals("")) throw new Exception("Name is a required field");
-
         if(isStrict) {
             if(catalog.getActiveDate() == null ||
                     catalog.getTotalItems() == 0) {
@@ -40,6 +38,6 @@ public class CatalogController {
             }
             return catalogService.strictSearchCatalog(catalog);
         }
-        return catalogService.casualSearchCatalog(catalog);
+        return catalogService.separateSearch(catalog);
     }
 }

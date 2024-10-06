@@ -52,7 +52,7 @@ public class CatalogService {
         Date activeDate = catalog.getActiveDate();
         int totalItems = catalog.getTotalItems();
 
-        if(name.equals("") && activeDate == null) {
+        if(name == null && activeDate == null) {
             return catalogRepository.findAllByTotalItems(totalItems);
         } else if (activeDate == null && totalItems == 0) {
             return catalogRepository.findAllByName(name);
