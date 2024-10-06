@@ -28,4 +28,8 @@ public class ProductService {
         catalogRepository.save(catalog);
         return productRepository.save(product);
     }
+
+    public List<Product> searchProduct(String keyword) {
+        return productRepository.findAllByNameStartingWith(keyword);
+    }
 }

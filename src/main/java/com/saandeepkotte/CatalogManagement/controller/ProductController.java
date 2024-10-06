@@ -22,4 +22,10 @@ public class ProductController {
     public Product createNewProduct(@RequestBody Product product, @PathVariable int catalogId) {
         return productService.addProduct(product, catalogId);
     }
+
+    @GetMapping("/{keyword}")
+    public List<Product> searchProduct(@PathVariable String keyword) throws Exception {
+        if(keyword.length() < 3) throw new Exception("Search keyword must have length > 3");
+        return productService.searchProduct(keyword);
+    }
 }
