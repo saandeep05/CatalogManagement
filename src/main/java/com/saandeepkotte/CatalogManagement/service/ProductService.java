@@ -30,6 +30,6 @@ public class ProductService {
     }
 
     public List<Product> searchProduct(String keyword) {
-        return productRepository.findAllByNameStartingWith(keyword);
+        return productRepository.findByNameStartingWith(keyword);
     }
 }
