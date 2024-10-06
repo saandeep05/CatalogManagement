@@ -46,4 +46,18 @@ public class CatalogService {
                 totalItems
         );
     }
+
+    public List<Catalog> separateSearch(Catalog catalog) {
+        String name = catalog.getName();
+        Date activeDate = catalog.getActiveDate();
+        int totalItems = catalog.getTotalItems();
+
+        if(name.equals("") && activeDate == null) {
+            return catalogRepository.findAllByTotalItems(totalItems);
+        } else if (activeDate == null && totalItems == 0) {
+            return catalogRepository.findAllByName(name);
+        } else {
+            return catalogRepository.findAllByActiveDateGreaterThanEqual(activeDate);
+        }
+    }
 }
