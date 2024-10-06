@@ -28,7 +28,7 @@ public class CatalogController {
         return catalogService.addCatalog(catalog);
     }
 
-    @PostMapping("/{isStrict}")
+    @PostMapping("/search/{isStrict}")
     public List<Catalog> searchCatalog(@RequestBody Catalog catalog,
                                        @PathVariable boolean isStrict) throws Exception {
         if(catalog.getName().equals("")) throw new Exception("Name is a required field");
