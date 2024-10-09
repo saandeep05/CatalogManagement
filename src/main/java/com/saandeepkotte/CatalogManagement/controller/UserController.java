@@ -2,6 +2,7 @@ package com.saandeepkotte.CatalogManagement.controller;
 
 import com.saandeepkotte.CatalogManagement.model.User;
 import com.saandeepkotte.CatalogManagement.repository.UserRepository;
+import com.saandeepkotte.CatalogManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,13 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder encoder;
+    private UserService userService;
 
     @PostMapping("/register")
     public User addUser(@RequestBody User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        return userService.saveUser(user);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        return userService.verify(user);
     }
 }
