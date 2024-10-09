@@ -32,4 +32,8 @@ public class UserService {
         }
         return "login failed!";
     }
+
+    public String generateToken(User user) {
+        return jwtService.generateToken(user.getUsername());
+    }
 }
