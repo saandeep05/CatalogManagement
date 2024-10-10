@@ -36,4 +36,8 @@ public class UserService {
     public String generateToken(User user) {
         return jwtService.generateToken(user.getUsername());
     }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }
