@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/catalog")
+@CrossOrigin("*")
 public class CatalogController {
     @Autowired
     private CatalogService catalogService;
