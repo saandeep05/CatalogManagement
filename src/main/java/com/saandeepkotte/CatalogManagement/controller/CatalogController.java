@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/catalog")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class CatalogController {
     @Autowired
     private CatalogService catalogService;
