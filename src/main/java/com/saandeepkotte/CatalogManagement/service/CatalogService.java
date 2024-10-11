@@ -5,7 +5,7 @@ import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,7 +31,7 @@ public class CatalogService {
 
     public List<Catalog> casualSearchCatalog(Catalog catalog) {
         String name = catalog.getName();
-        Date activeDate = catalog.getActiveDate();
+        LocalDateTime activeDate = catalog.getActiveDate();
         int totalItems = catalog.getTotalItems();
 
         if(activeDate == null && totalItems == 0) {
@@ -49,7 +49,7 @@ public class CatalogService {
 
     public List<Catalog> separateSearch(Catalog catalog) {
         String name = catalog.getName();
-        Date activeDate = catalog.getActiveDate();
+        LocalDateTime activeDate = catalog.getActiveDate();
         int totalItems = catalog.getTotalItems();
 
         if(name == null && activeDate == null) {

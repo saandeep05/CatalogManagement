@@ -1,8 +1,11 @@
 package com.saandeepkotte.CatalogManagement.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +17,12 @@ import java.util.List;
 @Table(name = "catalog")
 public class Catalog {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NonNull
     private String name;
-    private Date activeDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime activeDate;
     private int totalItems;
     @OneToMany(mappedBy = "catalog",
             fetch = FetchType.LAZY,

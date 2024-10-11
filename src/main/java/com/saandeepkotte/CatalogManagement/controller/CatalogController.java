@@ -6,8 +6,8 @@ import com.saandeepkotte.CatalogManagement.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -24,7 +24,7 @@ public class CatalogController {
 
     @PostMapping
     public Catalog createNewCatalog(@RequestBody Catalog catalog) {
-        catalog.setActiveDate(new Date());
+        catalog.setActiveDate(LocalDateTime.now());
         catalog.setTotalItems(0);
         return catalogService.addCatalog(catalog);
     }
