@@ -18,15 +18,19 @@ public class Product {
     private int id;
     @NonNull
     private String name;
+    @NonNull
     private String category;
     private String longDescription;
-    @NonNull
     private String shortDescription;
     @NonNull
     private int price;
+    @NonNull
+    private Currency currency;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "catalog_id", referencedColumnName = "id", nullable = false)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private Catalog catalog;
+
+    enum Currency { INR, USD, EUR, YEN, AUD, GBP, KWD }
 }
