@@ -1,10 +1,7 @@
 package com.saandeepkotte.CatalogManagement.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +13,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NonNull
     private String username;
+    @NonNull
+    private String email;
+    @NonNull
     private String password;
     private String role;
 }
