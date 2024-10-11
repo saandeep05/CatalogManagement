@@ -40,6 +40,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/api/user/register", "/api/user/login")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN")
+                        .requestMatchers("/api/catalog").hasRole("ADMIN")
                         .anyRequest()
                         .authenticated())
                 .formLogin(login -> login.permitAll())
