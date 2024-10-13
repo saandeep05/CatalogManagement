@@ -1,5 +1,6 @@
 package com.saandeepkotte.CatalogManagement.service;
 
+import com.saandeepkotte.CatalogManagement.controller.CatalogSearch;
 import com.saandeepkotte.CatalogManagement.model.Catalog;
 import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,17 +48,18 @@ public class CatalogService {
         );
     }
 
-    public List<Catalog> separateSearch(Catalog catalog) {
-        String name = catalog.getName();
-        LocalDateTime activeDate = catalog.getActiveDate();
-        int totalItems = catalog.getTotalItems();
+    public List<Catalog> separateSearch(CatalogSearch payload) {
+        String name = payload.getName();
+        String startDate = payload.getStartDate();
+        String endDate = payload.getEndDate();
 
-        if(name == null && activeDate == null) {
-            return catalogRepository.findAllByTotalItems(totalItems);
-        } else if (activeDate == null && totalItems == 0) {
+        if(name == null || name.equals("")) {
+            return catalogRepository.findByActiveDateBetween(startDate, endDate);
+        }
+        else if(endDate.equals(startDate)) {
             return catalogRepository.findAllByName(name);
         } else {
-            return catalogRepository.findAllByActiveDateGreaterThanEqual(activeDate);
+            return catalogRepository.findByNameAndActiveDateBetween(name, startDate, endDate);
         }
     }
 }

@@ -8,8 +8,10 @@ import java.util.List;
 
 public interface CatalogRepository extends JpaRepository<Catalog, Integer> {
     public List<Catalog> findAllByName(String name);
-    public List<Catalog> findAllByActiveDateGreaterThanEqual(LocalDateTime date);
-    public List<Catalog> findAllByTotalItems(int totalItems);
+
+    public List<Catalog> findByActiveDateBetween(String startDate, String endDate);
+
+    public List<Catalog> findByNameAndActiveDateBetween(String name, String startDate, String endDate);
 
     public List<Catalog> findAllByNameAndActiveDateGreaterThanEqual(String name, LocalDateTime date);
 

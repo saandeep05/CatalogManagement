@@ -29,16 +29,8 @@ public class CatalogController {
         return catalogService.addCatalog(catalog);
     }
 
-    @PostMapping("/search/{isStrict}")
-    public List<Catalog> searchCatalog(@RequestBody Catalog catalog,
-                                       @PathVariable boolean isStrict) throws Exception {
-        if(isStrict) {
-            if(catalog.getActiveDate() == null ||
-                    catalog.getTotalItems() == 0) {
-                throw new Exception("Strict Mode: One or more fields are empty");
-            }
-            return catalogService.strictSearchCatalog(catalog);
-        }
-        return catalogService.separateSearch(catalog);
+    @PostMapping("/search")
+    public List<Catalog> searchCatalog(@RequestBody CatalogSearch payload) {
+        return catalogService.separateSearch(payload);
     }
 }
