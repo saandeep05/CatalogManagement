@@ -25,7 +25,7 @@ public class Catalog {
     @NonNull
     private String name;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime activeDate;
     private int totalItems;
     @OneToMany(mappedBy = "catalog",

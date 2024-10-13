@@ -6,7 +6,9 @@ import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -54,12 +56,21 @@ public class CatalogService {
         String endDate = payload.getEndDate();
 
         if(name == null || name.equals("")) {
-            return catalogRepository.findByActiveDateBetween(startDate, endDate);
+
+            return catalogRepository.findByActiveDateGreaterThanEqualAndLessThanEqual(extractDateTime(startDate), extractDateTime(endDate));
         }
         else if(endDate.equals(startDate)) {
             return catalogRepository.findAllByName(name);
         } else {
-            return catalogRepository.findByNameAndActiveDateBetween(name, startDate, endDate);
+            return catalogRepository.findByNameAndActiveDateGreaterThanEqualAndLessThanEqual(name, extractDateTime(startDate), extractDateTime(endDate));
+//            return catalogRepository.findByActiveDateGreaterThanEqualAndLessThanEqual(extractDateTime(startDate), extractDateTime(endDate));
         }
+    }
+
+    private LocalDateTime extractDateTime(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        LocalDateTime dateTime = date.atStartOfDay();
+        return dateTime;
     }
 }
