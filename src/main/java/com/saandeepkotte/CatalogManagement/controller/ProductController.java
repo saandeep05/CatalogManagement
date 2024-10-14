@@ -29,4 +29,9 @@ public class ProductController {
         if(keyword.length() < 3) throw new Exception("Search keyword must have length > 3");
         return productService.searchProduct(keyword);
     }
+
+    @GetMapping("/{catalogId}")
+    public List<Product> getProductsByCatalogId(@PathVariable int catalogId) {
+        return productService.getProductByCatalogId(catalogId);
+    }
 }

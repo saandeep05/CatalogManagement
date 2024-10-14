@@ -32,4 +32,8 @@ public class ProductService {
     public List<Product> searchProduct(String keyword) {
         return productRepository.findByNameStartingWith(keyword);
     }
+
+    public List<Product> getProductByCatalogId(int catalogId) {
+        return productRepository.findByCatalogId(catalogId);
+    }
 }

@@ -27,12 +27,11 @@ public class Catalog {
     @NonNull
     private String name;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime activeDate;
     private int totalItems;
-    @OneToMany(mappedBy = "catalog",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            targetEntity = Product.class)
-    private List<Product> products;
+//    @OneToMany(mappedBy = "catalog",
+//            fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL,
+//            targetEntity = Product.class)
+//    private List<Product> products;
 }
