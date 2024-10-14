@@ -34,4 +34,9 @@ public class ProductController {
     public List<Product> getProductsByCatalogId(@PathVariable int catalogId) {
         return productService.getProductByCatalogId(catalogId);
     }
+
+    @DeleteMapping("/{id}")
+    public void softDeleteProduct(@PathVariable int id) {
+        productService.softDeleteProduct(id);
+    }
 }

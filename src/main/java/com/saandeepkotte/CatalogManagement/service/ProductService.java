@@ -7,6 +7,7 @@ import com.saandeepkotte.CatalogManagement.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,5 +36,13 @@ public class ProductService {
 
     public List<Product> getProductByCatalogId(int catalogId) {
         return productRepository.findByCatalogId(catalogId);
+    }
+
+    public void softDeleteProduct(int id) {
+        Optional<Product> product = productRepository.findById(id);
+        product.ifPresent(p -> {
+            p.setDeletedAt(LocalDateTime.now());
+            productRepository.save(p);
+        });
     }
 }
