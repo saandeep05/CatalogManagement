@@ -90,4 +90,12 @@ public class CatalogService {
             catalogRepository.save(c);
         });
     }
+
+    public List<Catalog> getDeletedCatalogs() {
+        return catalogRepository.findByDeletedAtIsNotNull();
+    }
+
+    public List<Catalog> getUndeletedCatalogs() {
+        return catalogRepository.findByDeletedAtIsNull();
+    }
 }

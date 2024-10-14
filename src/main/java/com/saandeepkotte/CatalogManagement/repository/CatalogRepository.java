@@ -25,4 +25,8 @@ public interface CatalogRepository extends JpaRepository<Catalog, Integer> {
 
     @Query("UPDATE Catalog c SET c.name = :name WHERE c.id = :id")
     void updateCatalog(@Param("id") int id, @Param("name") String name);
+
+    List<Catalog> findByDeletedAtIsNotNull();
+
+    List<Catalog> findByDeletedAtIsNull();
 }

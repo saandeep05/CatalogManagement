@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/catalog")
@@ -18,8 +19,14 @@ public class CatalogController {
     private CatalogService catalogService;
 
     @GetMapping
-    public List<Catalog> getCatalogs() {
-        return catalogService.getAllCatalogs();
+    public List<Catalog> getCatalogs(@RequestParam(required = false) Optional<Boolean> deleted) {
+        return deleted.map(d -> {
+            if(d) {
+                return catalogService.getDeletedCatalogs();
+            } else {
+                return catalogService.getUndeletedCatalogs();
+            }
+        }).orElse(catalogService.getAllCatalogs());
     }
 
     @PostMapping
