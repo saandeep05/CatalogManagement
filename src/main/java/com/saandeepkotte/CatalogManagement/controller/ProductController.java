@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/product")
@@ -15,8 +16,15 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public List<Product> getProducts() {
-        return productService.getAllProducts();
+    public List<Product> getProducts(@RequestParam(required = false) Optional<Boolean> deleted) {
+        return deleted.map(d -> {
+            if(d) {
+                return productService.getDeletedProducts();
+            }
+            else {
+                return productService.getUndeletedProducts();
+            }
+        }).orElse(productService.getAllProducts());
     }
 
     @PostMapping("/{catalogId}")

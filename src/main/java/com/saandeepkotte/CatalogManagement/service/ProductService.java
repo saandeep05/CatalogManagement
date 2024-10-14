@@ -45,4 +45,12 @@ public class ProductService {
             productRepository.save(p);
         });
     }
+
+    public List<Product> getDeletedProducts() {
+        return productRepository.findByDeletedAtIsNotNull();
+    }
+
+    public List<Product> getUndeletedProducts() {
+        return productRepository.findByDeletedAtIsNull();
+    }
 }

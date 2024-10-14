@@ -10,4 +10,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     public List<Product> findByNameStartingWith(String keyword);
 
     List<Product> findByCatalogId(int catalogId);
+
+    List<Product> findByDeletedAtIsNotNull();
+
+    List<Product> findByDeletedAtIsNull();
 }
