@@ -80,7 +80,12 @@ public class CatalogService {
     }
 
     public void updateCatalog(Catalog payload) {
-        catalogRepository.updateCatalog(payload.getId(), payload.getName());
+//        catalogRepository.updateCatalog(payload.getId(), payload.getName());
+        Optional<Catalog> catalog = catalogRepository.findById(payload.getId());
+        catalog.ifPresent(c -> {
+            c.setName(payload.getName());
+            catalogRepository.save(c);
+        });
     }
 
     public void softDeleteCatalog(int id) {
