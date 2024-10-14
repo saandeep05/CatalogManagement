@@ -38,4 +38,9 @@ public class CatalogController {
     public void updateCatalog(@RequestBody Catalog payload) {
         catalogService.updateCatalog(payload);
     }
+
+    @DeleteMapping("/{id}")
+    public void softDeleteCatalog(@PathVariable int id) {
+        catalogService.softDeleteCatalog(id);
+    }
 }

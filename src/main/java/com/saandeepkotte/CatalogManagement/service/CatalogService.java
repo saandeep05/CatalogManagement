@@ -82,4 +82,12 @@ public class CatalogService {
     public void updateCatalog(Catalog payload) {
         catalogRepository.updateCatalog(payload.getId(), payload.getName());
     }
+
+    public void softDeleteCatalog(int id) {
+        Optional<Catalog> catalog = catalogRepository.findById(id);
+        catalog.ifPresent(c -> {
+            c.setDeletedAt(LocalDateTime.now());
+            catalogRepository.save(c);
+        });
+    }
 }

@@ -29,6 +29,8 @@ public class Catalog {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime activeDate;
     private int totalItems;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime deletedAt;
 //    @OneToMany(mappedBy = "catalog",
 //            fetch = FetchType.LAZY,
 //            cascade = CascadeType.ALL,
