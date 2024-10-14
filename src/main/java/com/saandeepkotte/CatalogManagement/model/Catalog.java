@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "catalog")
+@DynamicUpdate
 public class Catalog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

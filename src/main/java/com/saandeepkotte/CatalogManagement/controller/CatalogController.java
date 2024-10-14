@@ -33,4 +33,9 @@ public class CatalogController {
     public List<Catalog> searchCatalog(@RequestBody CatalogSearch payload) {
         return catalogService.separateSearch(payload);
     }
+
+    @PutMapping
+    public void updateCatalog(@RequestBody Catalog payload) {
+        catalogService.updateCatalog(payload);
+    }
 }

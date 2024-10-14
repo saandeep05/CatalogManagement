@@ -3,6 +3,7 @@ package com.saandeepkotte.CatalogManagement.service;
 import com.saandeepkotte.CatalogManagement.controller.CatalogSearch;
 import com.saandeepkotte.CatalogManagement.model.Catalog;
 import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class CatalogService {
     @Autowired
     private CatalogRepository catalogRepository;
+    @Autowired
+    private EntityManager entityManager;
 
     public List<Catalog> getAllCatalogs() {
         return catalogRepository.findAll();
@@ -72,5 +77,9 @@ public class CatalogService {
         LocalDate date = LocalDate.parse(dateString, formatter);
         LocalDateTime dateTime = date.atStartOfDay();
         return dateTime;
+    }
+
+    public void updateCatalog(Catalog payload) {
+        catalogRepository.updateCatalog(payload.getId(), payload.getName());
     }
 }

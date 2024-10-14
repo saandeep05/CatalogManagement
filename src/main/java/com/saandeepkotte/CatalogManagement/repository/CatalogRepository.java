@@ -22,4 +22,7 @@ public interface CatalogRepository extends JpaRepository<Catalog, Integer> {
     public List<Catalog> findAllByNameAndActiveDateGreaterThanEqualAndTotalItems(String name, LocalDateTime activeDate, int totalItems);
 
     List<Catalog> findAllByNameOrActiveDateGreaterThanEqualOrTotalItems(String name, LocalDateTime activeDate, int totalItems);
+
+    @Query("UPDATE Catalog c SET c.name = :name WHERE c.id = :id")
+    void updateCatalog(@Param("id") int id, @Param("name") String name);
 }
