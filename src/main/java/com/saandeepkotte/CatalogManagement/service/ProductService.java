@@ -47,7 +47,6 @@ public class ProductService {
         }
         return productRepository.findByCatalogId(catalogId);
     }
-
     public void softDeleteProduct(int id) throws InvalidIdException {
         Optional<Product> product = productRepository.findById(id);
         if(product.isEmpty()) {
@@ -56,6 +55,11 @@ public class ProductService {
         product.ifPresent(p -> {
             p.setDeletedAt(LocalDateTime.now());
             productRepository.save(p);
+            Optional<Catalog> catalog = catalogRepository.findById(p.getCatalog().getId());
+            catalog.ifPresent(c -> {
+                c.setTotalItems(c.getTotalItems()-1);
+                catalogRepository.save(c);
+            });
         });
     }
 
@@ -65,5 +69,17 @@ public class ProductService {
 
     public List<Product> getUndeletedProducts() {
         return productRepository.findByDeletedAtIsNull();
+    }
+
+    public void updateProduct(int id, Product product) throws InvalidIdException {
+        Optional<Product> productFetched = productRepository.findById(id);
+        if(productFetched.isEmpty()) {
+            throw new InvalidIdException(id);
+        }
+        productFetched.ifPresent(p -> {
+            product.setId(id);
+            product.setCatalog(p.getCatalog());
+            productRepository.save(product);
+        });
     }
 }

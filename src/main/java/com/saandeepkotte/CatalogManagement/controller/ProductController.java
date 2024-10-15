@@ -67,6 +67,12 @@ public class ProductController {
         return productService.getProductByCatalogId(catalogId);
     }
 
+    @PutMapping("/{id}")
+    public void updateProduct(@PathVariable int id, @RequestBody ProductPayload payload) throws InvalidIdException {
+        Product product = payload.toProduct();
+        this.productService.updateProduct(id, product);
+    }
+
     @DeleteMapping("/{id}")
     public void softDeleteProduct(@PathVariable int id) throws InvalidIdException {
         productService.softDeleteProduct(id);
