@@ -1,8 +1,10 @@
 package com.saandeepkotte.CatalogManagement.advice;
 
+import com.saandeepkotte.CatalogManagement.exceptions.InvalidCredentialsException;
 import com.saandeepkotte.CatalogManagement.exceptions.InvalidIdException;
 import com.saandeepkotte.CatalogManagement.exceptions.InvalidSearchException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -35,6 +37,20 @@ public class ApplicationExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidSearchException.class)
     public Map<String, String> handleInvalidSearch(InvalidSearchException e) {
+        errorMap.put("error", e.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public Map<String, String> handleUserNotFound(UsernameNotFoundException e) {
+        errorMap.put("error", e.getMessage());
+        return errorMap;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public Map<String, String> handleInvalidCredentials(InvalidCredentialsException e) {
         errorMap.put("error", e.getMessage());
         return errorMap;
     }

@@ -2,6 +2,7 @@ package com.saandeepkotte.CatalogManagement.controller;
 
 import com.saandeepkotte.CatalogManagement.dto.LoginRequest;
 import com.saandeepkotte.CatalogManagement.dto.RegisterRequest;
+import com.saandeepkotte.CatalogManagement.exceptions.InvalidCredentialsException;
 import com.saandeepkotte.CatalogManagement.model.User;
 import com.saandeepkotte.CatalogManagement.repository.UserRepository;
 import com.saandeepkotte.CatalogManagement.service.UserService;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +40,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public UserResponse login(@Valid @RequestBody LoginRequest request) {
+    public UserResponse login(@Valid @RequestBody LoginRequest request) throws UsernameNotFoundException, InvalidCredentialsException {
         System.out.println(request);
         User user = request.toUser();
-        String token = userService.verify(user);
         User fetchedUser = userService.findByUsername(user.getUsername());
-        return new UserResponse(user.getUsername(), token, fetchedUser.getRole());
+        try {
+            String token = userService.verify(user);
+            return new UserResponse(user.getUsername(), token, fetchedUser.getRole());
+        } catch (Exception e) {
+            throw new InvalidCredentialsException("Incorrect password for username '" + user.getUsername() + "'");
+        }
     }
 }
