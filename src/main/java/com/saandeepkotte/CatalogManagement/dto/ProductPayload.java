@@ -20,6 +20,8 @@ public class ProductPayload {
     private int price;
     @NotBlank(message = "currency is required")
     private Currency currency;
+    private String longDescription;
+    private String shortDescription;
 
     public Product toProduct() {
         Product product = new Product();
@@ -27,6 +29,8 @@ public class ProductPayload {
         product.setCategory(category);
         product.setPrice(price);
         product.setCurrency(currency);
+        product.setLongDescription(longDescription);
+        product.setShortDescription(shortDescription);
         return product;
     }
 }

@@ -8,8 +8,10 @@ import com.saandeepkotte.CatalogManagement.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @RestController
 @RequestMapping("/api/product")
@@ -31,12 +33,27 @@ public class ProductController {
     }
 
     @PostMapping("/{catalogId}")
-    public Product createNewProduct(
-            @RequestBody ProductPayload payload,
+    public List<Product> createNewProduct(
+            @RequestBody List<ProductPayload> payloads,
             @PathVariable int catalogId
     ) throws InvalidIdException {
-        Product product = payload.toProduct();
-        return productService.addProduct(product, catalogId);
+        AtomicBoolean error = new AtomicBoolean(false);
+        List<Product> products = new ArrayList<>();
+
+        payloads.stream().forEach(payload -> {
+            if(error.get()) return;
+            Product product = payload.toProduct();
+            try {
+                products.add(productService.addProduct(product, catalogId));
+            } catch (InvalidIdException e) {
+                error.set(true);
+            }
+        });
+
+        if(error.get()) {
+            throw new InvalidIdException(catalogId);
+        }
+        return products;
     }
 
     @GetMapping("/search/{keyword}")
