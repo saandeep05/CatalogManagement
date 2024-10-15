@@ -1,6 +1,7 @@
 package com.saandeepkotte.CatalogManagement.service;
 
 import com.saandeepkotte.CatalogManagement.dto.CatalogSearch;
+import com.saandeepkotte.CatalogManagement.exceptions.InvalidIdException;
 import com.saandeepkotte.CatalogManagement.model.Catalog;
 import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
 import jakarta.persistence.EntityManager;
@@ -78,17 +79,23 @@ public class CatalogService {
         return dateTime;
     }
 
-    public void updateCatalog(Catalog payload) {
+    public void updateCatalog(Catalog payload) throws InvalidIdException {
 //        catalogRepository.updateCatalog(payload.getId(), payload.getName());
         Optional<Catalog> catalog = catalogRepository.findById(payload.getId());
+        if(catalog.isEmpty()) {
+            throw new InvalidIdException(payload.getId());
+        }
         catalog.ifPresent(c -> {
             c.setName(payload.getName());
             catalogRepository.save(c);
         });
     }
 
-    public void softDeleteCatalog(int id) {
+    public void softDeleteCatalog(int id) throws InvalidIdException {
         Optional<Catalog> catalog = catalogRepository.findById(id);
+        if(catalog.isEmpty()) {
+            throw new InvalidIdException(id);
+        }
         catalog.ifPresent(c -> {
             c.setDeletedAt(LocalDateTime.now());
             catalogRepository.save(c);

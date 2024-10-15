@@ -1,8 +1,11 @@
 package com.saandeepkotte.CatalogManagement.controller;
 
+import com.saandeepkotte.CatalogManagement.dto.CatalogPayload;
 import com.saandeepkotte.CatalogManagement.dto.CatalogSearch;
+import com.saandeepkotte.CatalogManagement.exceptions.InvalidIdException;
 import com.saandeepkotte.CatalogManagement.model.Catalog;
 import com.saandeepkotte.CatalogManagement.service.CatalogService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +32,8 @@ public class CatalogController {
     }
 
     @PostMapping
-    public Catalog createNewCatalog(@RequestBody Catalog catalog) {
+    public Catalog createNewCatalog(@Valid @RequestBody CatalogPayload payload) {
+        Catalog catalog = payload.toCatalog();
         catalog.setActiveDate(LocalDateTime.now());
         catalog.setTotalItems(0);
         return catalogService.addCatalog(catalog);
@@ -41,12 +45,13 @@ public class CatalogController {
     }
 
     @PutMapping
-    public void updateCatalog(@RequestBody Catalog payload) {
-        catalogService.updateCatalog(payload);
+    public void updateCatalog(@Valid @RequestBody CatalogPayload payload) throws InvalidIdException {
+        Catalog catalog = payload.toCatalog();
+        catalogService.updateCatalog(catalog);
     }
 
     @DeleteMapping("/{id}")
-    public void softDeleteCatalog(@PathVariable int id) {
+    public void softDeleteCatalog(@PathVariable int id) throws InvalidIdException {
         catalogService.softDeleteCatalog(id);
     }
 }
