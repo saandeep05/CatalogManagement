@@ -1,6 +1,6 @@
 package com.saandeepkotte.CatalogManagement.service;
 
-import com.saandeepkotte.CatalogManagement.controller.CatalogSearch;
+import com.saandeepkotte.CatalogManagement.dto.CatalogSearch;
 import com.saandeepkotte.CatalogManagement.model.Catalog;
 import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
 import jakarta.persistence.EntityManager;
@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service

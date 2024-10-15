@@ -1,13 +1,12 @@
 package com.saandeepkotte.CatalogManagement.controller;
 
+import com.saandeepkotte.CatalogManagement.dto.CatalogSearch;
 import com.saandeepkotte.CatalogManagement.model.Catalog;
-import com.saandeepkotte.CatalogManagement.model.Product;
 import com.saandeepkotte.CatalogManagement.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

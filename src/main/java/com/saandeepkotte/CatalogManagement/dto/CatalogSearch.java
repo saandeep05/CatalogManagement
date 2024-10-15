@@ -1,4 +1,4 @@
-package com.saandeepkotte.CatalogManagement.controller;
+package com.saandeepkotte.CatalogManagement.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
