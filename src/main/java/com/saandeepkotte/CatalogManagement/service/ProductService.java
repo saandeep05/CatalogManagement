@@ -1,5 +1,6 @@
 package com.saandeepkotte.CatalogManagement.service;
 
+import com.saandeepkotte.CatalogManagement.exceptions.InvalidIdException;
 import com.saandeepkotte.CatalogManagement.model.Catalog;
 import com.saandeepkotte.CatalogManagement.model.Product;
 import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
@@ -22,11 +23,16 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product addProduct(Product product, int catalogId) {
-        Catalog catalog = catalogRepository.findById(catalogId).orElseThrow();
-        product.setCatalog(catalog);
-        catalog.setTotalItems(catalog.getTotalItems()+1);
-        catalogRepository.save(catalog);
+    public Product addProduct(Product product, int catalogId) throws InvalidIdException {
+        Optional<Catalog> catalog = catalogRepository.findById(catalogId);
+        if(catalog.isEmpty()) {
+            throw new InvalidIdException(catalogId);
+        }
+        catalog.ifPresent(c -> {
+            product.setCatalog(c);
+            c.setTotalItems(c.getTotalItems()+1);
+            catalogRepository.save(c);
+        });
         return productRepository.save(product);
     }
 
@@ -34,12 +40,19 @@ public class ProductService {
         return productRepository.findByNameStartingWith(keyword);
     }
 
-    public List<Product> getProductByCatalogId(int catalogId) {
+    public List<Product> getProductByCatalogId(int catalogId) throws InvalidIdException {
+        Optional<Catalog> catalog = catalogRepository.findById(catalogId);
+        if(catalog.isEmpty()) {
+            throw new InvalidIdException(catalogId);
+        }
         return productRepository.findByCatalogId(catalogId);
     }
 
-    public void softDeleteProduct(int id) {
+    public void softDeleteProduct(int id) throws InvalidIdException {
         Optional<Product> product = productRepository.findById(id);
+        if(product.isEmpty()) {
+            throw new InvalidIdException(id);
+        }
         product.ifPresent(p -> {
             p.setDeletedAt(LocalDateTime.now());
             productRepository.save(p);

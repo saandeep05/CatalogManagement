@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.saandeepkotte.CatalogManagement.utils.Currency;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,6 +37,4 @@ public class Product {
     private Catalog catalog;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime deletedAt;
-
-    enum Currency { INR, USD, EUR, YEN, AUD, GBP, KWD }
 }
