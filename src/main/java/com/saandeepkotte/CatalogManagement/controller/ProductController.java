@@ -5,6 +5,7 @@ import com.saandeepkotte.CatalogManagement.exceptions.InvalidIdException;
 import com.saandeepkotte.CatalogManagement.exceptions.InvalidSearchException;
 import com.saandeepkotte.CatalogManagement.model.Product;
 import com.saandeepkotte.CatalogManagement.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class ProductController {
 
     @PostMapping("/{catalogId}")
     public List<Product> createNewProduct(
-            @RequestBody List<ProductPayload> payloads,
+            @Valid @RequestBody List<ProductPayload> payloads,
             @PathVariable int catalogId
     ) throws InvalidIdException {
         AtomicBoolean error = new AtomicBoolean(false);
@@ -68,7 +69,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public void updateProduct(@PathVariable int id, @RequestBody ProductPayload payload) throws InvalidIdException {
+    public void updateProduct(@PathVariable int id, @Valid @RequestBody ProductPayload payload) throws InvalidIdException {
         Product product = payload.toProduct();
         this.productService.updateProduct(id, product);
     }
