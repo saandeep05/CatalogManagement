@@ -35,7 +35,7 @@ public class ProductController {
 
     @PostMapping("/{catalogId}")
     public List<Product> createNewProduct(
-            @Valid @RequestBody List<ProductPayload> payloads,
+            @RequestBody List<@Valid ProductPayload> payloads,
             @PathVariable int catalogId
     ) throws InvalidIdException {
         AtomicBoolean error = new AtomicBoolean(false);

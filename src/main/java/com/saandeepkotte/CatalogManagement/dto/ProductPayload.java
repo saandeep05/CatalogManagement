@@ -2,7 +2,9 @@ package com.saandeepkotte.CatalogManagement.dto;
 
 import com.saandeepkotte.CatalogManagement.model.Product;
 import com.saandeepkotte.CatalogManagement.utils.Currency;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +18,9 @@ public class ProductPayload {
     private String name;
     @NotBlank(message = "category cannot be blank")
     private String category;
-    @NotBlank(message = "price cannot be blank")
+    @Min(value = 1, message = "price cannot be less than 1")
     private int price;
-    @NotBlank(message = "currency is required")
+    @NotNull(message = "currency is required")
     private Currency currency;
     private String longDescription;
     private String shortDescription;
