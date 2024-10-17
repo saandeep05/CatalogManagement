@@ -79,9 +79,9 @@ public class CatalogService {
         return dateTime;
     }
 
-    public void updateCatalog(Catalog payload) throws InvalidIdException {
+    public void updateCatalog(int id, Catalog payload) throws InvalidIdException {
 //        catalogRepository.updateCatalog(payload.getId(), payload.getName());
-        Optional<Catalog> catalog = catalogRepository.findById(payload.getId());
+        Optional<Catalog> catalog = catalogRepository.findById(id);
         if(catalog.isEmpty()) {
             throw new InvalidIdException(payload.getId());
         }

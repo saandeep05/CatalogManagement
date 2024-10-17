@@ -44,10 +44,10 @@ public class CatalogController {
         return catalogService.separateSearch(payload);
     }
 
-    @PutMapping
-    public void updateCatalog(@Valid @RequestBody CatalogPayload payload) throws InvalidIdException {
+    @PutMapping("/{id}")
+    public void updateCatalog(@PathVariable int id, @Valid @RequestBody CatalogPayload payload) throws InvalidIdException {
         Catalog catalog = payload.toCatalog();
-        catalogService.updateCatalog(catalog);
+        catalogService.updateCatalog(id, catalog);
     }
 
     @DeleteMapping("/{id}")
