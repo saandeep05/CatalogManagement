@@ -5,6 +5,7 @@ import com.saandeepkotte.CatalogManagement.model.Catalog;
 import com.saandeepkotte.CatalogManagement.model.Product;
 import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
 import com.saandeepkotte.CatalogManagement.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    @Transactional
     public Product addProduct(Product product, int catalogId) throws InvalidIdException {
         Optional<Catalog> catalog = catalogRepository.findById(catalogId);
         if(catalog.isEmpty()) {
@@ -47,6 +49,8 @@ public class ProductService {
         }
         return productRepository.findByCatalogId(catalogId);
     }
+
+    @Transactional
     public void softDeleteProduct(int id) throws InvalidIdException {
         Optional<Product> product = productRepository.findById(id);
         if(product.isEmpty()) {
