@@ -9,6 +9,8 @@ import com.saandeepkotte.CatalogManagement.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+    private static final Logger logger = LogManager.getLogger();
 
     @Data
     @AllArgsConstructor
@@ -33,21 +36,25 @@ public class UserController {
 
     @PostMapping("/register")
     public UserResponse addUser(@Valid @RequestBody RegisterRequest request) {
+        logger.debug("registering user " + request.toString());
         User user = request.toUser();
         User savedUser = userService.saveUser(user);
         String token = userService.generateToken(user);
+        logger.debug("registered token " + token);
         return new UserResponse(savedUser.getUsername(), token, savedUser.getRole());
     }
 
     @PostMapping("/login")
     public UserResponse login(@Valid @RequestBody LoginRequest request) throws UsernameNotFoundException, InvalidCredentialsException {
-        System.out.println(request);
+        logger.debug("logging user" + request);
         User user = request.toUser();
         User fetchedUser = userService.findByUsername(user.getUsername());
         try {
             String token = userService.verify(user);
+            logger.debug("logged in token " + token);
             return new UserResponse(user.getUsername(), token, fetchedUser.getRole());
         } catch (Exception e) {
+            logger.error("Incorrect password");
             throw new InvalidCredentialsException("Incorrect password for username '" + user.getUsername() + "'");
         }
     }
