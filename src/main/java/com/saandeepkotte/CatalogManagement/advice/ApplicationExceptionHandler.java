@@ -20,7 +20,7 @@ import java.util.Map;
 public class ApplicationExceptionHandler {
 
     Map<String, String> errorMap = new HashMap<>();
-    private static Logger logger = LogManager.getLogger(ApplicationExceptionHandler.class);
+    private static final Logger logger = LogManager.getLogger(ApplicationExceptionHandler.class);
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
