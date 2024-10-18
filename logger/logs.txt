@@ -2938,3 +2938,40 @@ io.jsonwebtoken.MalformedJwtException: Invalid compact JWT string: Compact JWSs 
 2024-10-18 17:31:57,860  INFO    =>  [ org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean, destroy ]  => Closing JPA EntityManagerFactory for persistence unit 'default' 
 2024-10-18 17:31:57,965  INFO    =>  [ com.zaxxer.hikari.HikariDataSource, close ]  => HikariPool-1 - Shutdown initiated... 
 2024-10-18 17:31:58,280  INFO    =>  [ com.zaxxer.hikari.HikariDataSource, close ]  => HikariPool-1 - Shutdown completed. 
+2024-10-18 18:09:01,380  INFO    =>  [ com.saandeepkotte.CatalogManagement.CatalogManagementApplication, logStarting ]  => Starting CatalogManagementApplication using Java 17.0.7 with PID 3768 (D:\Zycus-Courses\CatalogManagement\CatalogManagement\target\classes started by saand in D:\Zycus-Courses\CatalogManagement\CatalogManagement) 
+2024-10-18 18:09:01,453  INFO    =>  [ com.saandeepkotte.CatalogManagement.CatalogManagementApplication, logStartupProfileInfo ]  => No active profile set, falling back to 1 default profile: "default" 
+2024-10-18 18:09:06,115  INFO    =>  [ org.springframework.data.repository.config.RepositoryConfigurationDelegate, registerRepositoriesIn ]  => Bootstrapping Spring Data JPA repositories in DEFAULT mode. 
+2024-10-18 18:09:06,506  INFO    =>  [ org.springframework.data.repository.config.RepositoryConfigurationDelegate, registerRepositoriesIn ]  => Finished Spring Data repository scanning in 360 ms. Found 3 JPA repository interfaces. 
+2024-10-18 18:09:10,238  INFO    =>  [ org.springframework.boot.web.embedded.tomcat.TomcatWebServer, initialize ]  => Tomcat initialized with port 8080 (http) 
+2024-10-18 18:09:10,393  INFO    =>  [ org.apache.catalina.core.StandardService, log ]  => Starting service [Tomcat] 
+2024-10-18 18:09:10,395  INFO    =>  [ org.apache.catalina.core.StandardEngine, log ]  => Starting Servlet engine: [Apache Tomcat/10.1.30] 
+2024-10-18 18:09:10,730  INFO    =>  [ org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/], log ]  => Initializing Spring embedded WebApplicationContext 
+2024-10-18 18:09:10,732  INFO    =>  [ org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext, prepareWebApplicationContext ]  => Root WebApplicationContext: initialization completed in 9070 ms 
+2024-10-18 18:09:11,777  INFO    =>  [ org.hibernate.jpa.internal.util.LogHelper, logPersistenceUnitInformation ]  => HHH000204: Processing PersistenceUnitInfo [name: default] 
+2024-10-18 18:09:12,091  INFO    =>  [ org.hibernate.Version, logVersion ]  => HHH000412: Hibernate ORM core version 6.5.3.Final 
+2024-10-18 18:09:12,268  INFO    =>  [ org.hibernate.cache.internal.RegionFactoryInitiator, initiateService ]  => HHH000026: Second-level cache disabled 
+2024-10-18 18:09:13,936  INFO    =>  [ org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo, addTransformer ]  => No LoadTimeWeaver setup: ignoring JPA class transformer 
+2024-10-18 18:09:14,093  INFO    =>  [ com.zaxxer.hikari.HikariDataSource, getConnection ]  => HikariPool-1 - Starting... 
+2024-10-18 18:09:23,512  INFO    =>  [ com.zaxxer.hikari.pool.HikariPool, checkFailFast ]  => HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@54275b5d 
+2024-10-18 18:09:23,520  INFO    =>  [ com.zaxxer.hikari.HikariDataSource, getConnection ]  => HikariPool-1 - Start completed. 
+2024-10-18 18:09:28,181  INFO    =>  [ org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator, initiateService ]  => HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration) 
+2024-10-18 18:09:30,234  INFO    =>  [ org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean, buildNativeEntityManagerFactory ]  => Initialized JPA EntityManagerFactory for persistence unit 'default' 
+2024-10-18 18:09:32,071  INFO    =>  [ org.springframework.data.jpa.repository.query.QueryEnhancerFactory, <clinit> ]  => Hibernate is in classpath; If applicable, HQL parser will be used. 
+2024-10-18 18:09:33,182  INFO    =>  [ org.springframework.security.config.annotation.authentication.configuration.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer, configure ]  => Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider 
+2024-10-18 18:09:33,184  WARN    =>  [ org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer, configure ]  => Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used for username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. 
+2024-10-18 18:09:33,208  WARN    =>  [ org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration, openEntityManagerInViewInterceptor ]  => spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning 
+2024-10-18 18:09:34,550  INFO    =>  [ org.springframework.boot.web.embedded.tomcat.TomcatWebServer, start ]  => Tomcat started on port 8080 (http) with context path '/' 
+2024-10-18 18:09:34,563  INFO    =>  [ com.saandeepkotte.CatalogManagement.CatalogManagementApplication, logStarted ]  => Started CatalogManagementApplication in 36.367 seconds (process running for 41.522) 
+2024-10-18 18:10:34,746  INFO    =>  [ org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/], log ]  => Initializing Spring DispatcherServlet 'dispatcherServlet' 
+2024-10-18 18:10:34,748  INFO    =>  [ org.springframework.web.servlet.DispatcherServlet, initServletBean ]  => Initializing Servlet 'dispatcherServlet' 
+2024-10-18 18:10:34,752  INFO    =>  [ org.springframework.web.servlet.DispatcherServlet, initServletBean ]  => Completed initialization in 3 ms 
+2024-10-18 18:10:35,431  DEBUG    =>  [ com.saandeepkotte.CatalogManagement.controller.UserController, login ]  => logging userLoginRequest(username=saandeep, password=sa@123) 
+2024-10-18 18:10:38,317  DEBUG    =>  [ com.saandeepkotte.CatalogManagement.controller.UserController, login ]  => logged in token eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYWFuZGVlcCIsImlhdCI6MTcyOTI1NTIzOCwiZXhwIjoxNzI5MjU3MDM4fQ.yrqn-extSrYE3Vas1iZhhBHwCMXfz7ahjd1_rgY0Qtk 
+2024-10-18 18:10:38,696  DEBUG    =>  [ com.saandeepkotte.CatalogManagement.controller.CatalogController, lambda$getCatalogs$0 ]  => getting undeleted catalogs... 
+2024-10-18 18:11:26,559  DEBUG    =>  [ com.saandeepkotte.CatalogManagement.controller.CatalogController, searchCatalog ]  => searching by.....CatalogSearch(name=books, startDate=2024-10-18, endDate=2024-10-18) 
+2024-10-18 18:12:33,482  DEBUG    =>  [ com.saandeepkotte.CatalogManagement.controller.UserController, login ]  => logging userLoginRequest(username=saandeep, password=sa) 
+2024-10-18 18:12:34,543  ERROR    =>  [ com.saandeepkotte.CatalogManagement.controller.UserController, login ]  => Incorrect password 
+2024-10-18 18:12:34,554  ERROR    =>  [ com.saandeepkotte.CatalogManagement.advice.ApplicationExceptionHandler, handleInvalidCredentials ]  => {error=Incorrect password for username 'saandeep'} 
+2024-10-18 18:14:08,549  DEBUG    =>  [ com.saandeepkotte.CatalogManagement.controller.UserController, login ]  => logging userLoginRequest(username=tharun, password=th@123) 
+2024-10-18 18:14:09,594  DEBUG    =>  [ com.saandeepkotte.CatalogManagement.controller.UserController, login ]  => logged in token eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0aGFydW4iLCJpYXQiOjE3MjkyNTU0NDksImV4cCI6MTcyOTI1NzI0OX0.EOr9XOthuEP0bS3XHdT6QWTLs9Mng16Oa0GetExOxq8 
+2024-10-18 18:14:09,649  DEBUG    =>  [ com.saandeepkotte.CatalogManagement.controller.ProductController, lambda$getProducts$0 ]  => getting undeleted products... 

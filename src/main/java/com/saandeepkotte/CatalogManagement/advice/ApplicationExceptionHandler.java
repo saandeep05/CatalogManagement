@@ -3,6 +3,8 @@ package com.saandeepkotte.CatalogManagement.advice;
 import com.saandeepkotte.CatalogManagement.exceptions.InvalidCredentialsException;
 import com.saandeepkotte.CatalogManagement.exceptions.InvalidIdException;
 import com.saandeepkotte.CatalogManagement.exceptions.InvalidSearchException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,12 +20,14 @@ import java.util.Map;
 public class ApplicationExceptionHandler {
 
     Map<String, String> errorMap = new HashMap<>();
+    private static Logger logger = LogManager.getLogger(ApplicationExceptionHandler.class);
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleInvalidArguments(MethodArgumentNotValidException e) {
         e.getBindingResult().getFieldErrors().stream()
                 .forEach(error -> errorMap.put(error.getField(), error.getDefaultMessage()));
+        logger.error(errorMap);
         return errorMap;
     }
 
@@ -31,6 +35,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(InvalidIdException.class)
     public Map<String, String> handleInvalidId(InvalidIdException e) {
         errorMap.put("error", e.getMessage());
+        logger.error(errorMap);
         return errorMap;
     }
 
@@ -38,6 +43,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(InvalidSearchException.class)
     public Map<String, String> handleInvalidSearch(InvalidSearchException e) {
         errorMap.put("error", e.getMessage());
+        logger.error(errorMap);
         return errorMap;
     }
 
@@ -45,6 +51,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(UsernameNotFoundException.class)
     public Map<String, String> handleUserNotFound(UsernameNotFoundException e) {
         errorMap.put("error", e.getMessage());
+        logger.error(errorMap);
         return errorMap;
     }
 
@@ -52,6 +59,7 @@ public class ApplicationExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     public Map<String, String> handleInvalidCredentials(InvalidCredentialsException e) {
         errorMap.put("error", e.getMessage());
+        logger.error(errorMap);
         return errorMap;
     }
 }
