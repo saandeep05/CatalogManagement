@@ -5,6 +5,8 @@ import com.saandeepkotte.CatalogManagement.exceptions.InvalidIdException;
 import com.saandeepkotte.CatalogManagement.model.Catalog;
 import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
 import jakarta.persistence.EntityManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class CatalogService {
     private CatalogRepository catalogRepository;
     @Autowired
     private EntityManager entityManager;
+    private static final Logger logger = LogManager.getLogger(CatalogService.class);
 
     public List<Catalog> getAllCatalogs() {
         return catalogRepository.findAll();
@@ -76,6 +79,7 @@ public class CatalogService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(dateString, formatter);
         LocalDateTime dateTime = date.atStartOfDay();
+        logger.debug("getting date time " + dateTime);
         return dateTime;
     }
 
@@ -83,6 +87,7 @@ public class CatalogService {
 //        catalogRepository.updateCatalog(payload.getId(), payload.getName());
         Optional<Catalog> catalog = catalogRepository.findById(id);
         if(catalog.isEmpty()) {
+            logger.debug("no catalog found");
             throw new InvalidIdException(payload.getId());
         }
         catalog.ifPresent(c -> {

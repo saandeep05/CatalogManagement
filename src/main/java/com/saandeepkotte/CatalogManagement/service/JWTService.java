@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +22,14 @@ import java.util.function.Function;
 @Service
 public class JWTService {
     private final String secretKey;
+    private static final Logger logger = LogManager.getLogger(JWTService.class);
 
     public JWTService() {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
             SecretKey sk = keyGenerator.generateKey();
             this.secretKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+            logger.debug(("secret key generated"));
         } catch(NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -50,15 +54,18 @@ public class JWTService {
     }
 
     public String extractUsername(String token) {
+        logger.debug("extracting username.....");
         return extractClaim(token, Claims::getSubject);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+        logger.debug("extracting using " + claimResolver);
         Claims allClaims = extractAllClaims(token);
         return claimResolver.apply(allClaims);
     }
 
     private Claims extractAllClaims(String token) {
+        logger.debug("parsing token to extract claims using key generated");
         return Jwts.parser()
                 .verifyWith(getKey())
                 .build()
@@ -67,16 +74,20 @@ public class JWTService {
     }
 
     private Date extractExpiration(String token) {
+        logger.debug("extracting expiry date.....");
         return extractClaim(token, Claims::getExpiration);
     }
 
     private boolean isTokenExpired(String token) {
         Date expiryDate = extractExpiration(token);
-        return expiryDate.before(new Date());
+        boolean isExpired = expiryDate.before(new Date());
+        logger.debug("Token expired? " + isExpired);
+        return isExpired;
     }
 
     public boolean isValidToken(String token, UserDetails userDetails) {
         String usernameExtracted = extractUsername(token);
+        logger.debug("username extracted from token is: " + usernameExtracted);
         return usernameExtracted.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 }

@@ -7,6 +7,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private JWTService jwtService;
     @Autowired
     private ApplicationContext context;
+    private static final Logger logger = LogManager.getLogger(JwtFilter.class);
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -32,17 +35,21 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = null;
 
         if(authHeader != null && authHeader.startsWith("Bearer")) {
+            logger.debug("auth header found and starts with 'Bearer'");
             token = authHeader.substring(7);
             username = jwtService.extractUsername(token);
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            logger.debug("username found and authentication is not set... Setting it up...");
             UserDetails userDetails = context.getBean(MyUserDetailsService.class).loadUserByUsername(username);
 
             if(jwtService.isValidToken(token, userDetails)) {
+                logger.debug("token is valid... bypassing the basic auth filter now");
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                logger.debug("authentication success in jwt filter");
             }
         }
 

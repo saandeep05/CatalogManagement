@@ -6,6 +6,8 @@ import com.saandeepkotte.CatalogManagement.model.Product;
 import com.saandeepkotte.CatalogManagement.repository.CatalogRepository;
 import com.saandeepkotte.CatalogManagement.repository.ProductRepository;
 import jakarta.transaction.Transactional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ public class ProductService {
     private ProductRepository productRepository;
     @Autowired
     private CatalogRepository catalogRepository;
+    private static final Logger logger = LogManager.getLogger(ProductService.class);
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
@@ -26,16 +29,21 @@ public class ProductService {
 
     @Transactional
     public Product addProduct(Product product, int catalogId) throws InvalidIdException {
+        logger.debug("adding product...");
         Optional<Catalog> catalog = catalogRepository.findById(catalogId);
         if(catalog.isEmpty()) {
             throw new InvalidIdException(catalogId);
         }
         catalog.ifPresent(c -> {
+            logger.info("catalog found");
             product.setCatalog(c);
             c.setTotalItems(c.getTotalItems()+1);
             catalogRepository.save(c);
+            logger.debug("catalog saved with updated totalItems " + c);
         });
-        return productRepository.save(product);
+        Product savedProduct = productRepository.save(product);
+        logger.debug("product saved " + product);
+        return savedProduct;
     }
 
     public List<Product> searchProduct(String keyword) {
@@ -59,10 +67,12 @@ public class ProductService {
         product.ifPresent(p -> {
             p.setDeletedAt(LocalDateTime.now());
             productRepository.save(p);
+            logger.debug("deleted product " + p);
             Optional<Catalog> catalog = catalogRepository.findById(p.getCatalog().getId());
             catalog.ifPresent(c -> {
                 c.setTotalItems(c.getTotalItems()-1);
                 catalogRepository.save(c);
+                logger.debug("reduced totalItems of catalog " + c);
             });
         });
     }
@@ -84,6 +94,7 @@ public class ProductService {
             product.setId(id);
             product.setCatalog(p.getCatalog());
             productRepository.save(product);
+            logger.debug("updated product " + product);
         });
     }
 }
