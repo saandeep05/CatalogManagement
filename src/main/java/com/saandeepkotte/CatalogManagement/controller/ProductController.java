@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/product")
@@ -43,24 +44,13 @@ public class ProductController {
             @RequestBody List<@Valid ProductPayload> payloads,
             @PathVariable int catalogId
     ) throws InvalidIdException {
-        AtomicBoolean error = new AtomicBoolean(false);
-        List<Product> products = new ArrayList<>();
-
-        payloads.stream().forEach(payload -> {
-            if(error.get()) return;
-            Product product = payload.toProduct();
-            try {
-                logger.debug("creating product " + product.toString());
-                products.add(productService.addProduct(product, catalogId));
-                logger.debug("successfully inserted product " + product.toString());
-            } catch (InvalidIdException e) {
-                logger.error("could not create product " + product.toString());
-                error.set(true);
-            }
-        });
-
-        if(error.get()) {
-            throw new InvalidIdException(catalogId);
+        List<Product> products = payloads.stream().map(ProductPayload::toProduct).collect(Collectors.toList());
+        try {
+            logger.debug("creating products");
+            products = productService.addMultipleProducts(products, catalogId);
+            logger.debug("successfully inserted product ");
+        } catch (InvalidIdException e) {
+            logger.error("could not create products");
         }
         logger.info("Successfully created the products");
         return products;

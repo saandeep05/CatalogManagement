@@ -46,6 +46,24 @@ public class ProductService {
         return savedProduct;
     }
 
+    @Transactional
+    public List<Product> addMultipleProducts(List<Product> products, int catalogId) throws InvalidIdException {
+        Optional<Catalog> catalog = catalogRepository.findById(catalogId);
+        if(catalog.isEmpty()) {
+            throw new InvalidIdException(catalogId);
+        }
+        catalog.ifPresent(c -> {
+            logger.debug("catalog found");
+            products.stream().forEach(product -> product.setCatalog(c));
+            c.setTotalItems(c.getTotalItems() + products.size());
+            catalogRepository.save(c);
+            logger.debug("catalog saved with updated totalItems " + c);
+        });
+        List<Product> fetchedProducts = productRepository.saveAll(products);
+        logger.debug("products added " + fetchedProducts);
+        return fetchedProducts;
+    }
+
     public List<Product> searchProduct(String keyword) {
         return productRepository.findByNameStartingWith(keyword);
     }
